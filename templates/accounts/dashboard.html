@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Your dashboard &mdash; ByteBarn{% endblock %}
+
+{% block content %}
+<h1 class="page-title">Hello, {{ user.first_name|default:user.username }}</h1>
+<p class="text-body-secondary mb-4">Here is where you left off.</p>
+
+<div class="row row-cols-1 row-cols-sm-3 g-4 mb-4">
+  <div class="col">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body">
+        <div class="text-body-secondary text-uppercase small">Orders placed</div>
+        <div class="fs-2 fw-bold">{{ total_orders }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body">
+        <div class="text-body-secondary text-uppercase small">Total spent</div>
+        <div class="fs-2 fw-bold">{{ currency }}{{ total_spent }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body">
+        <div class="text-body-secondary text-uppercase small">Basket</div>
+        <div class="fs-2 fw-bold">{{ cart_count }}</div>
+        <a href="{% url 'shop:cart' %}" class="small">Go to basket &rarr;</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card border-0 shadow-sm">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2 class="h5 mb-0">Recent orders</h2>
+      {% if total_orders %}<a href="{% url 'accounts:order_history' %}" class="small">See all</a>{% endif %}
+    </div>
+
+    {% if recent_orders %}
+      <div class="table-responsive">
+        <table class="table align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>Order</th>
+              <th>Placed</th>
+              <th>Items</th>
+              <th>Status</th>
+              <th class="text-end">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for order in recent_orders %}
+              <tr>
+                <td class="table-order-id">
+                  <a href="{% url 'shop:order_detail' order.pk %}" class="text-decoration-none">
+                    #{{ order.pk }}
+                  </a>
+                </td>
+                <td>{{ order.created_at|date:"j M Y" }}</td>
+                <td>{{ order.item_count }}</td>
+                <td>
+                  <span class="badge {% if order.status == 'cancelled' %}text-bg-danger
+                        {% elif order.status == 'shipped' %}text-bg-success
+                        {% else %}text-bg-warning{% endif %}">
+                    {{ order.get_status_display }}
+                  </span>
+                </td>
+                <td class="text-end fw-semibold">{{ currency }}{{ order.total }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="empty-state p-5 text-center">
+        <p class="mb-2 text-body-secondary">You have not ordered anything yet.</p>
+        <a href="{% url 'shop:product_list' %}" class="btn btn-primary btn-sm">Find your first part</a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

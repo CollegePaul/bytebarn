@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="GeForce RTX 4060">
+  <rect width="400" height="300" fill="#2a1035"/>
+  <rect x="0" y="250" width="400" height="50" fill="#0b1220"/>
+  <rect x="0" y="248" width="400" height="3" fill="#f472b6"/>
+  <g transform="translate(0,-35)">
+    <rect x="90" y="105" width="220" height="110" rx="10" fill="#e2e8f0"/>
+    <rect x="90" y="205" width="220" height="18" fill="#94a3b8"/>
+    <circle cx="160" cy="160" r="38" fill="#334155"/>
+    <circle cx="160" cy="160" r="16" fill="#0f172a"/>
+    <circle cx="250" cy="160" r="38" fill="#334155"/>
+    <circle cx="250" cy="160" r="16" fill="#0f172a"/>
+    </g>
+  <text x="200" y="285" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="19" font-weight="600" fill="#e2e8f0">GeForce RTX 4060</text>
+</svg>

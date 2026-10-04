@@ -1,0 +1,24 @@
+# The virtual environment - never commit this, it is huge and disposable
+.venv/
+venv/
+env/
+
+# The database - it is generated from migrations, do not commit it
+*.sqlite3
+db.sqlite3
+
+# Uploaded files, if anyone adds the ImageField mission
+media/
+
+# Python leftovers
+__pycache__/
+*.pyc
+*.pyo
+
+# Editors
+.vscode/
+.idea/
+
+# Files your operating system makes
+Thumbs.db
+.DS_Store

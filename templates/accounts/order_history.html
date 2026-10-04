@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}My orders &mdash; ByteBarn{% endblock %}
+
+{% block content %}
+<h1 class="page-title">My orders</h1>
+<p class="text-body-secondary mb-4">
+  Every order {{ user.first_name|default:user.username }} has placed, newest first.
+</p>
+
+{% if orders %}
+  <div class="card border-0 shadow-sm">
+    <div class="table-responsive">
+      <table class="table align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>Order</th>
+            <th>Placed</th>
+            <th>Items</th>
+            <th>Status</th>
+            <th class="text-end">Total</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in orders %}
+            <tr>
+              <td class="table-order-id fw-semibold">#{{ order.pk }}</td>
+              <td>{{ order.created_at|date:"j M Y, H:i" }}</td>
+              <td>{{ order.item_count }}</td>
+              <td>
+                <span class="badge {% if order.status == 'cancelled' %}text-bg-danger
+                      {% elif order.status == 'shipped' %}text-bg-success
+                      {% else %}text-bg-warning{% endif %}">
+                  {{ order.get_status_display }}
+                </span>
+              </td>
+              <td class="text-end fw-semibold">{{ currency }}{{ order.total }}</td>
+              <td class="text-end">
+                <a href="{% url 'shop:order_detail' order.pk %}" class="btn btn-sm btn-outline-primary">
+                  View
+                </a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% else %}
+  <div class="empty-state p-5 text-center">
+    <h2 class="h4">No orders yet</h2>
+    <p class="text-body-secondary">When you buy something, it will show up here.</p>
+    <a href="{% url 'shop:product_list' %}" class="btn btn-primary">Go to the shop</a>
+  </div>
+{% endif %}
+{% endblock %}

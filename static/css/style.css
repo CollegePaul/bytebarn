@@ -1,0 +1,82 @@
+/* ByteBarn styling.
+   Bootstrap does almost everything. This file is only for the few things
+   Bootstrap has no class for. Keep it short on purpose. */
+
+:root {
+  --barn-blue: #0d6efd;
+  --barn-dark: #10192b;
+}
+
+/* --- Product cards ------------------------------------------------------ */
+
+.product-card {
+  height: 100%;
+  transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.product-card .card-img-top {
+  background: #0b1220;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.product-card .card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card .card-text {
+  flex-grow: 1;
+}
+
+/* --- Home page hero ----------------------------------------------------- */
+
+.hero {
+  background: linear-gradient(135deg, #10192b 0%, #1e3a5f 100%);
+  color: #fff;
+  border-radius: 0.75rem;
+}
+
+/* --- Builder (cost calculator) ------------------------------------------ */
+
+.builder-total {
+  position: sticky;
+  top: 5rem;
+}
+
+.builder-total .display-5 {
+  font-variant-numeric: tabular-nums;
+}
+
+.part-row {
+  border-left: 4px solid var(--bs-primary);
+  background: #fff;
+}
+
+.budget-ok {
+  color: #198754;
+}
+
+.budget-over {
+  color: #dc3545;
+}
+
+/* --- Misc --------------------------------------------------------------- */
+
+.page-title {
+  margin-bottom: 0.25rem;
+}
+
+.empty-state {
+  border: 2px dashed var(--bs-border-color);
+  border-radius: 0.75rem;
+}
+
+.table-order-id {
+  font-variant-numeric: tabular-nums;
+}

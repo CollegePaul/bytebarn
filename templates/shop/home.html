@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}ByteBarn &mdash; PC parts without the guesswork{% endblock %}
+
+{% block content %}
+<div class="hero p-4 p-lg-5 mb-4">
+  <div class="row align-items-center">
+    <div class="col-lg-8">
+      <h1 class="display-5 fw-bold">Build your next PC.</h1>
+      <p class="lead mb-3">
+        CPUs, graphics cards, memory and everything in between. Work out what it
+        costs before you spend anything.
+      </p>
+      <a href="{% url 'shop:builder' %}" class="btn btn-light btn-lg me-2">Open the PC Builder</a>
+      <a href="{% url 'shop:product_list' %}" class="btn btn-outline-light btn-lg">Browse the shop</a>
+    </div>
+  </div>
+</div>
+
+<h2 class="mb-3">Featured this week</h2>
+
+{% if products %}
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
+    {% for product in products %}
+      <div class="col">
+        {% include "shop/_product_card.html" with product=product %}
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="empty-state p-5 text-center text-body-secondary">
+    <p class="mb-1">No products yet.</p>
+    <p class="mb-0">Load the sample data with <code>python manage.py seed_shop</code>.</p>
+  </div>
+{% endif %}
+{% endblock %}

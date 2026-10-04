@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="AMD Ryzen 5 5600">
+  <rect width="400" height="300" fill="#0f2942"/>
+  <rect x="0" y="250" width="400" height="50" fill="#0b1220"/>
+  <rect x="0" y="248" width="400" height="3" fill="#38bdf8"/>
+  <g transform="translate(0,-35)">
+    <rect x="135" y="95" width="130" height="130" rx="10" fill="#e2e8f0"/>
+    <rect x="160" y="120" width="80" height="80" rx="6" fill="#334155"/>
+    <g stroke="#94a3b8" stroke-width="8" stroke-linecap="round">
+      <path d="M155 72v22"/><path d="M190 72v22"/><path d="M225 72v22"/><path d="M250 72v22"/>
+      <path d="M155 226v22"/><path d="M190 226v22"/><path d="M225 226v22"/><path d="M250 226v22"/>
+      <path d="M118 115h22"/><path d="M118 155h22"/><path d="M118 195h22"/>
+      <path d="M260 115h22"/><path d="M260 155h22"/><path d="M260 195h22"/>
+    </g>
+    </g>
+  <text x="200" y="285" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="19" font-weight="600" fill="#e2e8f0">AMD Ryzen 5 5600</text>
+</svg>

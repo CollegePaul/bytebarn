@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ product.name }} &mdash; ByteBarn{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'shop:product_list' %}">Shop</a></li>
+    <li class="breadcrumb-item">
+      <a href="{% url 'shop:product_list' %}?category={{ product.category }}">
+        {{ product.get_category_display }}
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+  </ol>
+</nav>
+
+<div class="row g-4">
+  <div class="col-md-5">
+    <img src="{% static 'img/' %}{{ product.image }}" class="img-fluid rounded shadow-sm w-100"
+         alt="{{ product.name }}">
+  </div>
+
+  <div class="col-md-7">
+    <span class="badge text-bg-secondary mb-2">{{ product.get_category_display }}</span>
+    <h1 class="h3">{{ product.name }}</h1>
+
+    <p class="fs-2 fw-bold my-3">{{ currency }}{{ product.price }}</p>
+
+    <p class="text-body-secondary">{{ product.description|linebreaksbr }}</p>
+
+    {% if product.stock > 0 %}
+      <p class="text-success fw-semibold">
+        In stock &mdash; {{ product.stock }} left
+      </p>
+    {% else %}
+      <p class="text-danger fw-semibold">Out of stock</p>
+    {% endif %}
+
+    <form action="{% url 'shop:cart_add' product.pk %}" method="post" class="d-flex gap-2">
+      {% csrf_token %}
+      <input type="number" name="qty" value="1" min="1" class="form-control" style="max-width: 6rem">
+      <button class="btn btn-primary flex-grow-1" type="submit">Add to basket</button>
+    </form>
+
+    <p class="small text-body-secondary mt-3">
+      Product code: <code>{{ product.pk }}</code>
+    </p>
+  </div>
+</div>
+{% endblock %}

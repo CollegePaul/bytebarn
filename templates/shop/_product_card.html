@@ -1,0 +1,40 @@
+{% load static %}
+{% comment %}
+One product card.
+
+Included by both the home page and the shop page, so if you want to change how a
+card looks you only change it here, not in two different files.
+
+Use it with:
+    {% include "shop/_product_card.html" with product=product %}
+{% endcomment %}
+
+<div class="card product-card shadow-sm border-0 h-100">
+  <a href="{{ product.get_absolute_url }}">
+    {% if product.image %}
+      <img src="{% static 'img/' %}{{ product.image }}" class="card-img-top" alt="{{ product.name }}">
+    {% else %}
+      {% comment %}
+      No image on this product, so draw a placeholder rather than a broken
+      image icon. Note that this comment has to be a {% comment %} block and
+      not a {# one-liner #}, because a {# #} comment cannot span two lines --
+      Django's lexer then treats the leftover text as real template tags.
+      {% endcomment %}
+      <div class="card-img-top d-flex align-items-center justify-content-center text-body-secondary">
+        No image
+      </div>
+    {% endif %}
+  </a>
+  <div class="card-body d-flex flex-column">
+    <span class="badge text-bg-secondary align-self-start mb-2">{{ product.get_category_display }}</span>
+    <h5 class="card-title h6">
+      <a href="{{ product.get_absolute_url }}" class="text-decoration-none text-body">{{ product.name }}</a>
+    </h5>
+    <p class="card-text small text-body-secondary">{{ product.description|truncatewords:14 }}</p>
+    <p class="fw-bold fs-5 mb-2">{{ currency }}{{ product.price }}</p>
+    <form action="{% url 'shop:cart_add' product.pk %}" method="post" class="mt-auto">
+      {% csrf_token %}
+      <button class="btn btn-primary btn-sm w-100" type="submit">Add to basket</button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Order #{{ order.pk }} &mdash; ByteBarn{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'accounts:order_history' %}">My orders</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Order #{{ order.pk }}</li>
+  </ol>
+</nav>
+
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+  <h1 class="page-title mb-0">Order #{{ order.pk }}</h1>
+  <span class="badge fs-6
+        {% if order.status == 'cancelled' %}text-bg-danger
+        {% elif order.status == 'shipped' %}text-bg-success
+        {% else %}text-bg-warning{% endif %}">
+    {{ order.get_status_display }}
+  </span>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-8">
+    <div class="card border-0 shadow-sm">
+      <div class="table-responsive">
+        <table class="table align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>Product</th>
+              <th class="text-end">Price paid</th>
+              <th class="text-end">Qty</th>
+              <th class="text-end">Line total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in order.items.all %}
+              <tr>
+                <td>
+                  <a href="{{ item.product.get_absolute_url }}" class="text-decoration-none text-body">
+                    {{ item.product.name }}
+                  </a>
+                </td>
+                <td class="text-end">{{ currency }}{{ item.price }}</td>
+                <td class="text-end">{{ item.quantity }}</td>
+                <td class="text-end fw-semibold">{{ currency }}{{ item.line_total }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+          <tfoot class="table-light">
+            <tr>
+              <th colspan="3" class="text-end">Total</th>
+              <th class="text-end fs-5">{{ currency }}{{ order.total }}</th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body">
+        <h2 class="h5">Order details</h2>
+        <p class="mb-1"><strong>Placed:</strong> {{ order.created_at|date:"j M Y, H:i" }}</p>
+        <p class="mb-1"><strong>Customer:</strong> {{ order.customer.username }}</p>
+        <p class="mb-3"><strong>Items:</strong> {{ order.item_count }}</p>
+        <a href="{% url 'accounts:order_history' %}" class="btn btn-outline-secondary w-100">
+          Back to my orders
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

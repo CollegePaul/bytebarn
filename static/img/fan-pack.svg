@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="P12 Fan Pack of 3">
+  <rect width="400" height="300" fill="#0c2536"/>
+  <rect x="0" y="250" width="400" height="50" fill="#0b1220"/>
+  <rect x="0" y="248" width="400" height="3" fill="#22d3ee"/>
+  <g transform="translate(0,-35)">
+    <rect x="105" y="115" width="190" height="190" rx="14" fill="#e2e8f0"/>
+    <circle cx="200" cy="210" r="75" fill="#334155"/>
+    <g fill="#0f172a">
+      <path d="M200 210c-6-40 14-62 44-64 6 30-12 56-44 64z"/>
+      <path d="M200 210c34 6 56-14 58-44-30-6-52 12-58 44z"/>
+      <path d="M200 210c-6 40 14 62 44 64 6-30-12-56-44-64z"/>
+      <path d="M200 210c34-6 56 14 58 44-30 6-52-12-58-44z"/>
+    </g>
+    <circle cx="200" cy="210" r="22" fill="#38bdf8"/>
+    </g>
+  <text x="200" y="285" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="19" font-weight="600" fill="#e2e8f0">P12 Fan Pack of 3</text>
+</svg>

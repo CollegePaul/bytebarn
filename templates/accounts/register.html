@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Register &mdash; ByteBarn{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-7 col-lg-5">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body p-4">
+        <h1 class="h3 mb-1">Create an account</h1>
+        <p class="text-body-secondary mb-4">It takes about twenty seconds.</p>
+
+        <!-- {{ form|crispy }} turns the whole Django form into Bootstrap HTML -->
+        <form method="post" novalidate>
+          {% csrf_token %}
+          {{ form|crispy }}
+          <button type="submit" class="btn btn-primary w-100 mt-2">Register</button>
+        </form>
+
+        <p class="text-center text-body-secondary mt-3 mb-0">
+          Already have an account? <a href="{% url 'login' %}">Log in</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

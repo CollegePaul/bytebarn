@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Shop &mdash; ByteBarn{% endblock %}
+
+{% block content %}
+<h1 class="page-title">Shop</h1>
+<p class="text-body-secondary mb-4">{{ products|length }} product{{ products|length|pluralize }} available</p>
+
+<div class="row g-4">
+  <!-- ============ Filter sidebar ============ -->
+  <div class="col-lg-3">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body">
+        <h2 class="h6 text-uppercase text-body-secondary">Category</h2>
+        <ul class="list-unstyled mb-4">
+          <li class="mb-1">
+            <a href="{% url 'shop:product_list' %}"
+               class="{% if not selected_category %}fw-bold text-primary{% endif %}">
+              All products
+            </a>
+          </li>
+          {% for value, label in categories %}
+            <li class="mb-1">
+              <a href="?category={{ value }}"
+                 class="{% if selected_category == value %}fw-bold text-primary{% endif %}">
+                {{ label }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+
+        <h2 class="h6 text-uppercase text-body-secondary">Search</h2>
+        <form method="get" action="{% url 'shop:product_list' %}">
+          <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="e.g. radeon"
+                   value="{{ query }}">
+            <button class="btn btn-outline-secondary" type="submit">Go</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Product grid ============ -->
+  <div class="col-lg-9">
+    {% if products %}
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 g-4">
+        {% for product in products %}
+          <div class="col">
+            {% include "shop/_product_card.html" with product=product %}
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-state p-5 text-center text-body-secondary">
+        <h2 class="h5">Nothing matches that.</h2>
+        <p>Try a different category, or clear the search box.</p>
+        <a href="{% url 'shop:product_list' %}" class="btn btn-outline-secondary btn-sm">Show everything</a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

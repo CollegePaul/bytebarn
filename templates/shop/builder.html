@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}PC Builder &mdash; ByteBarn{% endblock %}
+
+{% block content %}
+<h1 class="page-title">PC Builder</h1>
+<p class="text-body-secondary mb-4">
+  Pick a part in each slot and the total updates as you go. Prices come straight
+  from the shop, so they are the same ones you will actually pay.
+</p>
+
+{% if groups %}
+  <form action="{% url 'shop:builder_add_to_cart' %}" method="post" id="builder-form">
+    {% csrf_token %}
+
+    <div class="row g-4">
+      <!-- ============ Part slots ============ -->
+      <div class="col-lg-7">
+        {% for group in groups %}
+          <div class="part-row rounded p-3 mb-3">
+            <label class="form-label fw-semibold" for="{{ group.value }}">
+              {{ group.label }}
+            </label>
+            <select class="form-select" name="{{ group.value }}" id="{{ group.value }}"
+                    data-part-select>
+              <option value="">-- none --</option>
+              {% for part in group.parts %}
+                <option value="{{ part.pk }}" data-price="{{ part.price }}">
+                  {{ part.name }} &mdash; {{ currency }}{{ part.price }}
+                </option>
+              {% endfor %}
+            </select>
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- ============ Running total ============ -->
+      <div class="col-lg-5">
+        <div class="card border-0 shadow-sm builder-total">
+          <div class="card-body p-4">
+            <h2 class="h6 text-uppercase text-body-secondary mb-3">Build total</h2>
+
+            <div class="display-5 fw-bold mb-1" id="build-total">{{ currency }}0.00</div>
+            <p class="text-body-secondary" id="build-count">No parts chosen yet</p>
+
+            <hr>
+
+            <label class="form-label" for="budget">Your budget</label>
+            <div class="input-group mb-2">
+              <span class="input-group-text">{{ currency }}</span>
+              <input type="number" id="budget" class="form-control" placeholder="e.g. 1200" min="0" step="50">
+            </div>
+            <div id="budget-message" class="small text-body-secondary"></div>
+
+            <hr>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-success" id="add-build" disabled>
+                Add the whole build to my basket
+              </button>
+              <button type="button" class="btn btn-outline-secondary" id="reset-build">
+                Start again
+              </button>
+            </div>
+
+            <p class="small text-body-secondary mt-3 mb-0">
+              Every price updates in your browser. Nothing is sent to the server
+              until you press the button.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+{% else %}
+  <div class="empty-state p-5 text-center text-body-secondary">
+    <p class="mb-1">There are no parts in the shop yet.</p>
+    <p class="mb-0">Load the sample data with <code>python manage.py seed_shop</code>.</p>
+  </div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+  <!-- data-currency lets the JavaScript format money without hard-coding the symbol -->
+  <script src="{% static 'js/builder.js' %}"
+          data-currency="{{ currency }}"></script>
+{% endblock %}
